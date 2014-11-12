@@ -23,10 +23,17 @@ public class Grid {
 		piecesInPlay = new ArrayList<Piece>();
 	}
 	
+	public Block get(int r, int c) {
+		return grid[r][c];
+	}
+	
 	public void set(int r, int c, Block b) {
 		grid[r][c] = b;
 	}
 	
+	public boolean inBounds(int r, int c) {
+		return (0 >= r && r < NUM_ROWS && 0 <= c && c < NUM_COLS);
+	}
 	
 	public void update() {
 		for (Piece p : piecesInPlay) {

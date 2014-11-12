@@ -4,43 +4,84 @@ import java.awt.Point;
 
 public class Block {
 	private Piece piece;
-	private Grid grid;
-	private int x;
-	private int y;
+	private Point point;
 	
-	public Block(Piece piece, Grid grid, int x, int y) {
+	public Block(Piece piece, Point loc) {
 		this.piece = piece;
-		this.grid = grid;
-		this.x = x;
-		this.y = y;
+		this.point = loc;
 	}
-	
+
+	public Block(Piece piece, int x, int y) {
+		this.piece = piece;
+		this.point = new Point(x, y);
+	}
+
 	public int getX() {
-		return x;
+		return point.x;
 	}
 
 	public int getY() {
-		return y;
+		return point.y;
 	}
 	
-	public int getRow(Point center) {
-		return y + center.y;
+	public int getRow() {
+		return coordToRow(point);
 	}
 
-	public int getCol(Point center) {
-		return x + center.x;
+	public int getCol() {
+		return coordToCol(point);
+	}
+	
+	public Point getFallLoc() {
+		return new Point(getRow() + 1, getCol());
+	}
+	
+	public Point getMoveLeftLoc() {
+		return new Point(getRow(), getCol() - 1);
+	}
+	
+	public Point getMoveRightLoc() {
+		return new Point(getRow(), getCol() + 1);
+	}
+	
+	public Point getRotateLoc() {
+		Point p = getRotatedPoint(point);
+		return new Point(coordToRow(p), coordToCol(p));
+	}
+	
+	/**
+	 * Get the row column coordinates of the block
+	 * @return the coordinates
+	 */
+	public Point getGridLocation() {
+		return new Point(getRow(), getCol());
 	}
 	
 	public void rotate() {
-        // rotate
-        int tmp = x;
-        x = -y;
-        y = tmp;
+		point.setLocation(getRotatedPoint(point));
 	}
 	
-	public void translate(int x, int y) {
-		this.x += x;
-		this.y += y;
+	public void translate(int dx, int dy) {
+		point.translate(dx, dy);
 	}
 	
+	private int getRotatedX(Point p) {
+		return -p.y;
+	}
+	
+	private int getRotatedY(Point p) {
+		return p.x;
+	}
+	
+	private Point getRotatedPoint(Point p) {
+		return new Point(getRotatedX(p), getRotatedY(p));
+	}
+	
+	private int coordToRow(Point p) {
+		return p.y + piece.getCenter().y;
+	}
+
+	private int coordToCol(Point p) {
+		return p.x + piece.getCenter().x;
+	}
 }
