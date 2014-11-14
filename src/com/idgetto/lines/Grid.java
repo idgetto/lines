@@ -1,27 +1,26 @@
 package com.idgetto.lines;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Queue;
 
 public class Grid {
-	private static byte NUM_ROWS = 15;
-	private static byte NUM_COLS = 7;
+	// Grid should have hidden upper rows for insertion
+	private final static byte NUM_ROWS = 24;
+	private final static byte NUM_COLS = 10;
+	
+	// Where should the piece start?
+	private static final Point PIECE_INSERT_POS = new Point(NUM_COLS / 2, 2);
 
 	private Block[][] grid;
-	private Queue<Piece> pieceQueue;
-	private ArrayList<Piece> piecesInPlay;
-	private Piece currentPiece;
 	
 	public Grid() {
 		grid = new Block[NUM_ROWS][NUM_COLS];
-		piecesInPlay = new ArrayList<Piece>();
 	}
 	
-	public Grid(Queue<Piece> pieces) {
-		grid = new Block[NUM_ROWS][NUM_COLS];
-		pieceQueue = pieces;
-		piecesInPlay = new ArrayList<Piece>();
-	}
+	//
+	// GET / SET
+	//
 	
 	public Block get(int r, int c) {
 		return grid[r][c];
@@ -31,16 +30,27 @@ public class Grid {
 		grid[r][c] = b;
 	}
 	
+	//
+	// CHECK
+	//
+	
 	public boolean inBounds(int r, int c) {
-		return (0 >= r && r < NUM_ROWS && 0 <= c && c < NUM_COLS);
+		return (0 <= r && r < NUM_ROWS && 0 <= c && c < NUM_COLS);
 	}
 	
-	public void update() {
-		for (Piece p : piecesInPlay) {
+	public void update(PieceManager pm) {
+		Piece currentPiece = pm.getCurrentPiece();
+		if (currentPiece.stopped()) {
+			System.out.println("Adding new piece");
+			addNewPiece(pm);
+		}
+		for (Piece p : pm.piecesInPlay()) {
 			removePiece(p);
 			p.update(this);
 			insertPiece(p);
 		}
+		removeFullRows();
+		print();
 	}
 	
 	public void insertPiece(Piece piece) {
@@ -51,9 +61,33 @@ public class Grid {
 		piece.removeFromGrid(this);
 	}
 	
-	private void addNewPiece() {
-		currentPiece = pieceQueue.poll();
-		insertPiece(currentPiece);
+	public void addNewPiece(PieceManager pm) {
+		Piece currentPiece = pm.nextPiece();
+		if (currentPiece != null) {
+			currentPiece.setCenter(PIECE_INSERT_POS);
+		}
+	}
+	
+	private void removeFullRows() {
+		for (int r = 0; r < NUM_ROWS; r++) {
+			if (checkFullRow(r)) {
+				removeRow(r);
+			}
+		}
+	}
+	
+	private boolean checkFullRow(int row) {
+		for (Block b : grid[row]) {
+			if (b == null)
+				return false;
+		}
+		return true;
+	}
+	
+	private void removeRow(int row) {
+		for (Block b : grid[row]) {
+			b.remove();
+		}
 	}
 	
 	//

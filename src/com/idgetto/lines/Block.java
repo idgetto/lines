@@ -3,6 +3,7 @@ package com.idgetto.lines;
 import java.awt.Point;
 
 public class Block {
+	
 	private Piece piece;
 	private Point point;
 	
@@ -14,6 +15,10 @@ public class Block {
 	public Block(Piece piece, int x, int y) {
 		this.piece = piece;
 		this.point = new Point(x, y);
+	}
+	
+	public void remove() {
+		piece.removeBlock(this);
 	}
 
 	public int getX() {
@@ -32,16 +37,40 @@ public class Block {
 		return coordToCol(point);
 	}
 	
+	public enum MoveDir {
+		DOWN,
+		LEFT,
+		RIGHT,
+		ROTATE,
+		NONE;
+	}
+
+	public Point getMoveLoc(MoveDir dir) {
+		switch (dir) {
+        case DOWN:
+        	return getFallLoc();
+		case LEFT:
+			return getMoveLeftLoc();
+		case RIGHT:
+			return getMoveRightLoc();
+		case ROTATE:
+			return getRotateLoc();
+		case NONE:
+			return getGridLocation();
+		}
+		return new Point();
+	}
+	
 	public Point getFallLoc() {
-		return new Point(getRow() + 1, getCol());
+		return new Point(getCol(), getRow() + 1);
 	}
 	
 	public Point getMoveLeftLoc() {
-		return new Point(getRow(), getCol() - 1);
+		return new Point(getCol() - 1, getRow());
 	}
 	
 	public Point getMoveRightLoc() {
-		return new Point(getRow(), getCol() + 1);
+		return new Point(getCol() + 1, getRow());
 	}
 	
 	public Point getRotateLoc() {
