@@ -33,7 +33,24 @@ public class PieceManager {
 	}
 	
 	private Piece genPiece() {
-		return new JPiece();
+		int rand = (int) (Math.random() * 7);
+
+		switch (rand) {
+		case 0:
+			return new OPiece();
+		case 1:
+			return new IPiece();
+		case 2:
+			return new SPiece();
+		case 3:
+			return new ZPiece();
+		case 4:
+			return new LPiece();
+		case 5:
+			return new JPiece();
+        default:
+			return new TPiece();
+		}
 	}
 	
 }

@@ -1,8 +1,6 @@
 package com.idgetto.lines;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Queue;
 
 public class Grid {
 	// Grid should have hidden upper rows for insertion
