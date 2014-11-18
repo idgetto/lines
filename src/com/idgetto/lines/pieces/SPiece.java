@@ -1,8 +1,11 @@
-package com.idgetto.lines;
+package com.idgetto.lines.pieces;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+
+import com.idgetto.lines.Block;
+import com.idgetto.lines.Piece;
 
 public class SPiece extends Piece {
 	

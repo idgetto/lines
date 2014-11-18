@@ -3,6 +3,14 @@ package com.idgetto.lines;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.idgetto.lines.pieces.IPiece;
+import com.idgetto.lines.pieces.JPiece;
+import com.idgetto.lines.pieces.LPiece;
+import com.idgetto.lines.pieces.OPiece;
+import com.idgetto.lines.pieces.SPiece;
+import com.idgetto.lines.pieces.TPiece;
+import com.idgetto.lines.pieces.ZPiece;
+
 public class PieceManager {
 	private List<Piece> piecesInPlay;
 	private Piece currentPiece;

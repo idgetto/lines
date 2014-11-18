@@ -17,11 +17,11 @@ public abstract class Piece {
 	// GET / SET
 	// 
 
-	protected List<Block> blocks() {
+	protected List<Block> getBlocks() {
 		return blocks;
 	}
 
-	protected Color color() {
+	protected Color getColor() {
 		return color;
 	}
 
@@ -101,7 +101,7 @@ public abstract class Piece {
 	 * Rotates a matrix 90 degrees clockwise
 	 */
 	public void rotate() {
-		for (Block b : blocks()) {
+		for (Block b : getBlocks()) {
 			b.rotate();
 		}
 	}
@@ -112,7 +112,7 @@ public abstract class Piece {
 	
 	public ArrayList<Point> getMoveLocs(MoveDir dir) {
 		ArrayList<Point> locs = new ArrayList<Point>();
-		for (Block b : blocks()) {
+		for (Block b : getBlocks()) {
 			locs.add(b.getMoveLoc(dir));
 		}
 		return locs;
@@ -143,7 +143,7 @@ public abstract class Piece {
 	//
 	
 	public void removeBlock(Block b) {
-		blocks().remove(b);
+		getBlocks().remove(b);
 	}
 
 	//
@@ -151,7 +151,7 @@ public abstract class Piece {
 	//
 
 	public void insertIntoGrid(Grid grid) {
-		for (Block b : blocks()) {
+		for (Block b : getBlocks()) {
 			int r = b.getRow();
 			int c = b.getCol();
 			if (grid.inBounds(r, c))
@@ -160,7 +160,7 @@ public abstract class Piece {
 	}
 	
 	public void removeFromGrid(Grid grid) {
-		for (Block b : blocks()) {
+		for (Block b : getBlocks()) {
 			int r = b.getRow();
 			int c = b.getCol();
 			if (grid.inBounds(r, c))
