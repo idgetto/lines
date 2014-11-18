@@ -9,14 +9,25 @@ import com.idgetto.lines.Block.MoveDir;
 
 public abstract class Piece {
 	protected boolean stopped = false;
+	protected Point center;
+	protected Color color;
+	protected List<Block> blocks;
 	
 	//
 	// GET / SET
 	// 
 
-	abstract protected ArrayList<Block> blocks();
-	abstract protected Color color();
-	abstract public Point getCenter();
+	protected List<Block> blocks() {
+		return blocks;
+	}
+
+	protected Color color() {
+		return color;
+	}
+
+	public Point getCenter() {
+		return center;
+	}
 
 	public void setCenter(Point point) {
 		getCenter().setLocation(point);
@@ -33,7 +44,6 @@ public abstract class Piece {
 	//
 	// CHECK
 	//
-	
 	
 	public boolean canMoveTo(Grid grid, List<Point> locs) {
 		for (Point p : locs) {
@@ -145,7 +155,7 @@ public abstract class Piece {
 			int r = b.getRow();
 			int c = b.getCol();
 			if (grid.inBounds(r, c))
-				grid.set(b.getRow(), b.getCol(), b);
+				grid.set(r, c, b);
 		}
 	}
 	
@@ -154,7 +164,7 @@ public abstract class Piece {
 			int r = b.getRow();
 			int c = b.getCol();
 			if (grid.inBounds(r, c))
-                grid.set(b.getRow(), b.getCol(), null);
+                grid.set(r, c, null);
 		}
 	}
 	

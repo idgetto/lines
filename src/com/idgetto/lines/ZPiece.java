@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class JPiece extends Piece {
+public class ZPiece extends Piece {
 	
-	public JPiece() {
+	public ZPiece() {
 		blocks = new ArrayList<Block>();
-		blocks.add(new Block(this, -1, -1));
 		blocks.add(new Block(this, -1, 0));
 		blocks.add(new Block(this, 0, 0));
-		blocks.add(new Block(this, 1, 0));
+		blocks.add(new Block(this, 0, 1));
+		blocks.add(new Block(this, 1, 1));
 		
 		center = new Point();
 		color = Color.blue;
