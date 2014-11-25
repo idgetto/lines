@@ -18,7 +18,7 @@ public class Block {
 	}
 	
 	public void remove() {
-		piece.removeBlock(this);
+		piece.getBlocks().remove(this);
 	}
 
 	public int getX() {

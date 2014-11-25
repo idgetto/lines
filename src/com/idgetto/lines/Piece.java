@@ -8,7 +8,6 @@ import java.util.List;
 import com.idgetto.lines.Block.MoveDir;
 
 public abstract class Piece {
-	protected boolean stopped = false;
 	protected Point center;
 	protected Color color;
 	protected List<Block> blocks;
@@ -33,14 +32,6 @@ public abstract class Piece {
 		getCenter().setLocation(point);
 	}
 	
-	public boolean stopped() {
-		return stopped;
-	}
-	
-	public void setStopped() {
-		this.stopped = true;
-	}
-
 	//
 	// CHECK
 	//
@@ -54,9 +45,7 @@ public abstract class Piece {
 	}
 	
 	public boolean canFall(Grid grid) {
-		boolean canFall = canMoveTo(grid, getFallLocs());
-		if (!canFall) setStopped();
-		return canFall; 
+		return canMoveTo(grid, getFallLocs()); 
 	}
 
 	// TODO: can you turn if something is in the way?
@@ -80,21 +69,25 @@ public abstract class Piece {
 		if (canFall(grid)) {
 			System.out.println("Can Fall");
 			fall();
-		} else {
-			System.out.println("Cannot Fall");
-		}
+        } else {
+        	System.out.println("Cannot Fall");
+        }
 	}
 
 	public void fall() {
-        getCenter().translate(0, 1);
+        move(0, 1);
 	}
 	
 	public void moveLeft() {
-		getCenter().translate(-1, 0);
+		move(-1, 0);
 	}
 	
 	public void moveRight() {
-		getCenter().translate(1, 0);
+		move(1, 0);
+	}
+	
+	private void move(int dx, int dy) {
+		getCenter().translate(dx, dy);
 	}
 	
     /**
@@ -137,35 +130,5 @@ public abstract class Piece {
 	public ArrayList<Point> getCurrentLocs() {
 		return getMoveLocs(MoveDir.NONE);
 	}
-	
-	//
-	// BLOCK
-	//
-	
-	public void removeBlock(Block b) {
-		getBlocks().remove(b);
-	}
 
-	//
-	// GRID
-	//
-
-	public void insertIntoGrid(Grid grid) {
-		for (Block b : getBlocks()) {
-			int r = b.getRow();
-			int c = b.getCol();
-			if (grid.inBounds(r, c))
-				grid.set(r, c, b);
-		}
-	}
-	
-	public void removeFromGrid(Grid grid) {
-		for (Block b : getBlocks()) {
-			int r = b.getRow();
-			int c = b.getCol();
-			if (grid.inBounds(r, c))
-                grid.set(r, c, null);
-		}
-	}
-	
 }

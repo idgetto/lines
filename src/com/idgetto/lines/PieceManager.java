@@ -17,7 +17,6 @@ public class PieceManager {
 	
 	public PieceManager() {
 		piecesInPlay = new ArrayList<Piece>();
-		nextPiece();
 	}
 	
 	public Piece getCurrentPiece() {

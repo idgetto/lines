@@ -6,12 +6,14 @@ import java.util.TimerTask;
 public class TetrisGame {
 	private static long DELAY = 200;
 
-	private Grid grid;
+	private GameManager gm;
 	private PieceManager pm;
+	private Grid grid;
 	
 	public TetrisGame() {
-		grid = new Grid();
+		gm = new GameManager();
 		pm = new PieceManager();
+		grid = new Grid();
 	}
 	
 	public void start() {
@@ -20,7 +22,7 @@ public class TetrisGame {
 
 			@Override
 			public void run() {
-				grid.update(pm);
+				gm.update(grid, pm);
 			}
 			
 		}, 0, DELAY);

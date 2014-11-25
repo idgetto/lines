@@ -35,28 +35,23 @@ public class Grid {
 	public boolean inBounds(int r, int c) {
 		return (0 <= r && r < NUM_ROWS && 0 <= c && c < NUM_COLS);
 	}
-	
-	public void update(PieceManager pm) {
-		Piece currentPiece = pm.getCurrentPiece();
-		if (currentPiece.stopped()) {
-			System.out.println("Adding new piece");
-			addNewPiece(pm);
-		}
-		for (Piece p : pm.piecesInPlay()) {
-			removePiece(p);
-			p.update(this);
-			insertPiece(p);
-		}
-		removeFullRows();
-		print();
-	}
-	
+
 	public void insertPiece(Piece piece) {
-		piece.insertIntoGrid(this);
+		for (Block b : piece.getBlocks()) {
+			int r = b.getRow();
+			int c = b.getCol();
+			if (inBounds(r, c))
+                set(r, c, b);
+		}
 	}
 	
 	public void removePiece(Piece piece) {
-		piece.removeFromGrid(this);
+		for (Block b : piece.getBlocks()) {
+			int r = b.getRow();
+			int c = b.getCol();
+			if (inBounds(r, c))
+                set(r, c, null);
+		}
 	}
 	
 	public void addNewPiece(PieceManager pm) {
@@ -66,7 +61,7 @@ public class Grid {
 		}
 	}
 	
-	private void removeFullRows() {
+	public void removeFullRows() {
 		for (int r = 0; r < NUM_ROWS; r++) {
 			if (checkFullRow(r)) {
 				removeRow(r);
