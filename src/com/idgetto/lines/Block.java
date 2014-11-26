@@ -75,7 +75,7 @@ public class Block {
 	
 	public Point getRotateLoc() {
 		Point p = getRotatedPoint(point);
-		return new Point(coordToRow(p), coordToCol(p));
+		return new Point(coordToCol(p), coordToRow(p));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class Block {
 	 * @return the coordinates
 	 */
 	public Point getGridLocation() {
-		return new Point(getRow(), getCol());
+		return new Point(getCol(), getRow());
 	}
 	
 	public void rotate() {

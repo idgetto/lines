@@ -37,9 +37,14 @@ public abstract class Piece {
 	//
 	
 	public boolean canMoveTo(Grid grid, List<Point> locs) {
+		locs.removeAll(getCurrentLocs());
+		System.out.println("locs size: " + locs.size());
 		for (Point p : locs) {
-			if (!(grid.inBounds(p.y, p.x) && grid.get(p.y, p.x) == null))
+			if (!(grid.inBounds(p.y, p.x) && grid.get(p.y, p.x) == null)) {
+                System.out.println(this + " cannot move");
+				System.out.println("Can't move to r: " + p.y + ", c: " + p.x);
 				return false;
+			}
 		}
 		return true;
 	}
@@ -67,11 +72,8 @@ public abstract class Piece {
 
 	public void update(Grid grid) {
 		if (canFall(grid)) {
-			System.out.println("Can Fall");
 			fall();
-        } else {
-        	System.out.println("Cannot Fall");
-        }
+		}
 	}
 
 	public void fall() {
@@ -103,7 +105,7 @@ public abstract class Piece {
 	// MOVE LOCS
 	//
 	
-	public ArrayList<Point> getMoveLocs(MoveDir dir) {
+	public List<Point> getMoveLocs(MoveDir dir) {
 		ArrayList<Point> locs = new ArrayList<Point>();
 		for (Block b : getBlocks()) {
 			locs.add(b.getMoveLoc(dir));
@@ -111,23 +113,23 @@ public abstract class Piece {
 		return locs;
 	}
 	
-	public ArrayList<Point> getFallLocs() {
+	public List<Point> getFallLocs() {
 		return getMoveLocs(MoveDir.DOWN);
 	}
 	
-	public ArrayList<Point> getMoveLeftLocs() {
+	public List<Point> getMoveLeftLocs() {
 		return getMoveLocs(MoveDir.LEFT);
 	}
 	
-	public ArrayList<Point> getMoveRightLocs() {
+	public List<Point> getMoveRightLocs() {
 		return getMoveLocs(MoveDir.RIGHT);
 	}
 	
-	public ArrayList<Point> getRotateLocs() {
+	public List<Point> getRotateLocs() {
 		return getMoveLocs(MoveDir.ROTATE);
 	}
 	
-	public ArrayList<Point> getCurrentLocs() {
+	public List<Point> getCurrentLocs() {
 		return getMoveLocs(MoveDir.NONE);
 	}
 

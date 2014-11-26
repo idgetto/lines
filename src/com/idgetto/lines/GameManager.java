@@ -4,7 +4,7 @@ public class GameManager {
 		
 	public void update(Grid grid, PieceManager pm) {
 		Piece currentPiece = pm.getCurrentPiece();
-		if (currentPiece == null || currentPiece.canFall(grid)) {
+		if (currentPiece == null || !currentPiece.canFall(grid)) {
 			System.out.println("Adding new piece");
 			addNewPiece(pm, grid);
 		}

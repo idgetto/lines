@@ -59,6 +59,7 @@ public class Grid {
 		if (currentPiece != null) {
 			currentPiece.setCenter(PIECE_INSERT_POS);
 		}
+		insertPiece(currentPiece);
 	}
 	
 	public void removeFullRows() {

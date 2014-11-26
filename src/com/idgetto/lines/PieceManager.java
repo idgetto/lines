@@ -27,12 +27,6 @@ public class PieceManager {
 		return piecesInPlay;
 	}
 	
-	public void updatePieces(Grid grid) {
-		for (Piece p : piecesInPlay) {
-			p.update(grid);
-		}
-	}
-	
 	public Piece nextPiece() {
 		currentPiece = genPiece();
 		piecesInPlay.add(currentPiece);
