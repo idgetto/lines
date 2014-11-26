@@ -18,7 +18,6 @@ public class ZPiece extends Piece {
 		
 		center = new Point();
 		color = Color.blue;
-		stopped = false;
 	}
 
 }

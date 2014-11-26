@@ -18,7 +18,6 @@ public class SPiece extends Piece {
 		
 		center = new Point();
 		color = Color.blue;
-		stopped = false;
 	}
 
 }
